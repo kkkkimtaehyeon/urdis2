@@ -12,6 +12,7 @@ public class Story {
 
     @Column(name = "story_title", length = 50)
     private String storyTitle;
+    @Column(name = "story_source", length = 1000, nullable = false)
     private String storySource;
     private LocalDateTime createdAt;
     private long likeCount;
