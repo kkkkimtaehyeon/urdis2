@@ -9,10 +9,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class StorySourceDto {
+public class StorySourceSaveDto {
     @NotBlank
     @Size(min = 1, max = 1000)
-    @JsonProperty("story-source")
+    @JsonProperty("storySource")
     private String storySource;
 
     public StorySource toEntity() {
