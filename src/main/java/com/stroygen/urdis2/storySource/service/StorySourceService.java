@@ -1,6 +1,6 @@
 package com.stroygen.urdis2.storySource.service;
 
-import com.stroygen.urdis2.storySource.dto.StorySourceDto;
+import com.stroygen.urdis2.storySource.dto.StorySourceSaveDto;
 import com.stroygen.urdis2.storySource.entity.StorySource;
 import com.stroygen.urdis2.storySource.repository.StorySourceRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,9 +12,9 @@ public class StorySourceService {
 
     private final StorySourceRepository storySourceRepository;
 
-    public Long save(StorySourceDto storySourceDto) {
+    public Long save(StorySourceSaveDto storySourceSaveDto) {
 
-        StorySource createdStorySource = storySourceRepository.save(storySourceDto.toEntity());
+        StorySource createdStorySource = storySourceRepository.save(storySourceSaveDto.toEntity());
 
         return createdStorySource.getStorySourceId();
     }

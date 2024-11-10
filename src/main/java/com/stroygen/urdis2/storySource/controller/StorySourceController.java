@@ -1,9 +1,12 @@
 package com.stroygen.urdis2.storySource.controller;
 
-import com.stroygen.urdis2.storySource.dto.StorySourceDto;
+import com.stroygen.urdis2.storySource.dto.StorySourceResponseDto;
+import com.stroygen.urdis2.storySource.dto.StorySourceSaveDto;
 import com.stroygen.urdis2.storySource.service.StorySourceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +20,9 @@ public class StorySourceController {
     private final StorySourceService storySourceService;
 
     @PostMapping("/")
-    public String createStorySource(@Valid @RequestBody StorySourceDto storySourceDto) {
+    public ResponseEntity<StorySourceResponseDto> createStorySource(@Valid @RequestBody StorySourceSaveDto saveDto) {
 
-        Long id = storySourceService.save(storySourceDto);
-        return id.toString();
+        Long id = storySourceService.save(saveDto);
+        return new ResponseEntity<>(new StorySourceResponseDto(id), HttpStatus.OK);
     }
 }
