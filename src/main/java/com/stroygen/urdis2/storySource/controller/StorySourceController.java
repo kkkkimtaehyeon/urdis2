@@ -1,5 +1,7 @@
 package com.stroygen.urdis2.storySource.controller;
 
+import com.stroygen.urdis2.story.entity.Story;
+import com.stroygen.urdis2.story.service.StoryService;
 import com.stroygen.urdis2.storySource.dto.StorySourceResponseDto;
 import com.stroygen.urdis2.storySource.dto.StorySourceSaveDto;
 import com.stroygen.urdis2.storySource.service.StorySourceService;
@@ -18,11 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class StorySourceController {
 
     private final StorySourceService storySourceService;
+    private final StoryService storyService;
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<StorySourceResponseDto> createStorySource(@Valid @RequestBody StorySourceSaveDto saveDto) {
 
-        Long id = storySourceService.save(saveDto);
-        return new ResponseEntity<>(new StorySourceResponseDto(id), HttpStatus.OK);
+        Long storySourceId = storySourceService.save(saveDto);
+        Long storyId = storyService.saveSourceIdOnStory(storySourceId);
+        return new ResponseEntity<>(new StorySourceResponseDto(storyId), HttpStatus.OK);
     }
 }
