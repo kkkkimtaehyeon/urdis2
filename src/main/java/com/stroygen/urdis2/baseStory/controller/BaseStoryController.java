@@ -1,9 +1,13 @@
 package com.stroygen.urdis2.baseStory.controller;
 
-import com.stroygen.urdis2.story.service.StoryServiceImpl;
+import com.stroygen.urdis2.baseStory.dto.BaseStorySaveResponseDto;
 import com.stroygen.urdis2.baseStory.dto.StorySourceResponseDto;
 import com.stroygen.urdis2.baseStory.dto.BaseStorySaveRequestDto;
-import com.stroygen.urdis2.baseStory.service.StorySourceService;
+import com.stroygen.urdis2.baseStory.entity.BaseStory;
+import com.stroygen.urdis2.baseStory.service.BaseStoryService;
+import com.stroygen.urdis2.story.dto.StoryInitializerDto;
+import com.stroygen.urdis2.story.dto.StorySaveDto;
+import com.stroygen.urdis2.story.service.StoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,14 +22,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BaseStoryController {
 
-    private final StorySourceService storySourceService;
-    private final StoryServiceImpl storyServiceImpl;
+    private final BaseStoryService baseStoryService;
+    private final StoryService storyService;
 
     @PostMapping
-    public ResponseEntity<StorySourceResponseDto> createBaseStory(@Valid @RequestBody BaseStorySaveRequestDto saveDto) {
+    public ResponseEntity<BaseStorySaveResponseDto> createBaseStory(@Valid @RequestBody BaseStorySaveRequestDto saveDto) {
 
-        Long storySourceId = storySourceService.save(saveDto);
-        Long storyId = storyServiceImpl.saveSourceIdOnStory(storySourceId);
-        return new ResponseEntity<>(new StorySourceResponseDto(storyId), HttpStatus.OK);
+        Long baseStoryId = baseStoryService.save(saveDto);
+        BaseStory baseStory = baseStoryService.get(baseStoryId);
+
+        Long storyId = storyService.initialize(new StoryInitializerDto(baseStory));
+        BaseStorySaveResponseDto responseDto = new BaseStorySaveResponseDto(storyId, baseStory.getBaseStory());
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 }

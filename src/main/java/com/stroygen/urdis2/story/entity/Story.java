@@ -23,7 +23,7 @@ public class Story {
     private Integer viewCount = 0;
     private Boolean isPublic = false;
     @ManyToOne
-    @JoinColumn(name = "story_source_id")
+    @JoinColumn(name = "base_story_id")
     private BaseStory baseStory;
 
     @Builder

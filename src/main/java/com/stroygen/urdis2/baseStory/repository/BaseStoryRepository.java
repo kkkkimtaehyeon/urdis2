@@ -8,5 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface BaseStoryRepository extends JpaRepository<BaseStory, Long> {
-    Optional<BaseStory> getByBaseStoryId(Long storySourceId);
+    Optional<BaseStory> findByBaseStoryId(Long baseStoryId);
+
 }
