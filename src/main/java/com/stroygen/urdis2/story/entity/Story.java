@@ -1,11 +1,10 @@
 package com.stroygen.urdis2.story.entity;
 
-import com.stroygen.urdis2.storySource.entity.StorySource;
+import com.stroygen.urdis2.baseStory.entity.BaseStory;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
 
 import java.time.LocalDateTime;
 
@@ -25,17 +24,17 @@ public class Story {
     private Boolean isPublic = false;
     @ManyToOne
     @JoinColumn(name = "story_source_id")
-    private StorySource storySource;
+    private BaseStory baseStory;
 
     @Builder
-    public Story(Long storyId, String storyTitle, LocalDateTime createdAt, Integer likeCount, Integer viewCount, Boolean isPublic, StorySource storySource) {
+    public Story(Long storyId, String storyTitle, LocalDateTime createdAt, Integer likeCount, Integer viewCount, Boolean isPublic, BaseStory baseStory) {
         this.storyId = storyId;
         this.storyTitle = storyTitle;
         this.createdAt = createdAt;
         this.likeCount = likeCount;
         this.viewCount = viewCount;
         this.isPublic = isPublic;
-        this.storySource = storySource;
+        this.baseStory = baseStory;
     }
 }
 

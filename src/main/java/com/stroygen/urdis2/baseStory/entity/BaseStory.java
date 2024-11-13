@@ -1,4 +1,4 @@
-package com.stroygen.urdis2.storySource.entity;
+package com.stroygen.urdis2.baseStory.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,17 +10,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Entity
-public class StorySource {
-    public StorySource(String storySource) {
-        this.storySource = storySource;
+public class BaseStory {
+    public BaseStory(String baseStory) {
+        this.baseStory = baseStory;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long storySourceId;
+    private Long baseStoryId;
 
     @Column(length = 1000, nullable = false)
-    private String storySource;
+    private String baseStory;
 
     @Column(nullable = false)
     @CreationTimestamp

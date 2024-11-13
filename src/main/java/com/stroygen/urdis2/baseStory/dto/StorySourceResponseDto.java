@@ -1,4 +1,4 @@
-package com.stroygen.urdis2.storySource.dto;
+package com.stroygen.urdis2.baseStory.dto;
 
 import lombok.Getter;
 import lombok.Setter;
