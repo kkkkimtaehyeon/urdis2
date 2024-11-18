@@ -1,0 +1,27 @@
+
+### post page
+@storyId = 1
+POST localhost:8080/api/stories/{{storyId}}/pages
+Content-Type: application/json
+
+{
+  "pageNumber": 1,
+  "options": [
+    {
+      "sentence": "문장1",
+      "index": 1
+    },
+    {
+      "sentence": "문장2",
+      "index": 2
+    },
+    {
+      "sentence": "문장3",
+      "index": 3
+    }
+  ],
+  "selected": {
+    "sentence": "문장2",
+    "index": 2
+  }
+}
