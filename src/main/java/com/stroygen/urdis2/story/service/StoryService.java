@@ -13,4 +13,5 @@ public interface StoryService {
     List<Story> getStories(Long userId);
     void removeStory(Long storyId);
     Story modifyStory(StoryUpdateDto storyUpdateDto);
+    boolean isStoryExists(Long storyId);
 }

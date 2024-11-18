@@ -1,7 +1,7 @@
 package com.stroygen.urdis2.story.service.impl;
 
+import com.stroygen.urdis2.exception.StoryNotFoundException;
 import com.stroygen.urdis2.story.dto.StoryInitializerDto;
-import com.stroygen.urdis2.story.dto.StorySaveDto;
 import com.stroygen.urdis2.story.dto.StoryUpdateDto;
 import com.stroygen.urdis2.story.entity.Story;
 import com.stroygen.urdis2.story.repository.StoryRepository;
@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -25,7 +26,8 @@ public class StoryServiceImpl implements StoryService {
 
     @Override
     public Story getStory(Long storyId) {
-        return null;
+        Optional<Story> optionalStory = storyRepository.findById(storyId);
+        return optionalStory.orElseThrow(() -> new StoryNotFoundException(storyId));
     }
 
     @Override
@@ -41,5 +43,10 @@ public class StoryServiceImpl implements StoryService {
     @Override
     public Story modifyStory(StoryUpdateDto storyUpdateDto) {
         return null;
+    }
+
+    @Override
+    public boolean isStoryExists(Long storyId) {
+        return storyRepository.existsById(storyId);
     }
 }

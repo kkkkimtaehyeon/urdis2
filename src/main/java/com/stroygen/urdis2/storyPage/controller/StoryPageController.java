@@ -13,19 +13,9 @@ import org.springframework.web.bind.annotation.*;
 public class StoryPageController {
 
     private final StoryPageService storyPageService;
-    private final StoryService storyService;
-
-//    @PostMapping("/{pageNumber}")
-//    public ResponseEntity<?> savePageContent(
-//            @PathVariable("storyId") Long storyId,
-//            @PathVariable("pageNumber") int pageNumber,
-//            @RequestBody String selected) {
-//
-//        return null;
-//    }
 
     @PostMapping
-    public void savePage(@PathVariable("storyId") int storyId,
+    public void savePage(@PathVariable("storyId") long storyId,
                          @RequestBody PageSaveRequest pageSaveRequest) {
 
 
