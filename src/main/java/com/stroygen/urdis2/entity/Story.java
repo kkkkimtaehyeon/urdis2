@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 public class Story {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "story_id")
     private Long storyId;
 
     @Column(length = 50)

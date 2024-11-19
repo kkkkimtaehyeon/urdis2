@@ -11,12 +11,14 @@ import lombok.NoArgsConstructor;
 public class StoryPage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "story_page_id")
     private Long storyPageId;
+    @Column(name = "page_number")
     private Integer pageNumber;
 
     private String content;
     @ManyToOne
-    @JoinColumn(name = "story_id")
+    @JoinColumn(name = "story_id", referencedColumnName = "story_id")
     private Story story;
 
     public StoryPage(Integer pageNumber, String content, Story story) {
