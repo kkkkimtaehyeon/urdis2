@@ -1,5 +1,6 @@
 package com.stroygen.urdis2.entity.page;
 
+import com.stroygen.urdis2.dto.page.PageResponse;
 import com.stroygen.urdis2.entity.Story;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -26,4 +27,9 @@ public class StoryPage {
         this.content = content;
         this.story = story;
     }
+
+    public PageResponse toResponseDto() {
+        return new PageResponse(this.pageNumber, this.content);
+    }
+
 }

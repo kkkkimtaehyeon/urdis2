@@ -6,9 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PageSaveResponse {
-    private String selected;
+    private String selectedSentence;
 
-    public PageSaveResponse(String selected) {
-        this.selected = selected;
+    public PageSaveResponse(String selectedSentence) {
+        this.selectedSentence = selectedSentence;
     }
 }

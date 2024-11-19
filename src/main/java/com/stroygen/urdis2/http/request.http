@@ -1,5 +1,5 @@
 
-### post page
+### 페이지 저장
 @storyId = 1
 POST localhost:8080/api/stories/{{storyId}}/pages
 Content-Type: application/json
@@ -25,3 +25,8 @@ Content-Type: application/json
     "index": 2
   }
 }
+
+### 페이지 단건 조회
+@pageNumber = 1
+GET localhost:8080/api/stories/{{storyId}}/pages/{{pageNumber}}
+Accept: application/json
