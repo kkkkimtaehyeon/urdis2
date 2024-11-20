@@ -39,8 +39,9 @@ public class StoryServiceImpl implements StoryService {
 
     @Override
     public void removeStory(Long storyId) {
+        Story story = getStory(storyId);
 
-
+        storyRepository.delete(story);
     }
 
     @Override

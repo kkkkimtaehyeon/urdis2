@@ -24,4 +24,10 @@ public class StoryController {
         return ResponseEntity.status(HttpStatus.OK).body(savedStory);
     }
 
+    @DeleteMapping("/{storyId}")
+    public ResponseEntity<Void> removeStory(@PathVariable("storyId") Long storyId) {
+        storyService.removeStory(storyId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 }
