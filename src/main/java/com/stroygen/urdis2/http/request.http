@@ -5,7 +5,7 @@ POST localhost:8080/api/stories/{{storyId}}/pages
 Content-Type: application/json
 
 {
-  "pageNumber": 1,
+  "pageNumber": 5,
   "options": [
     {
       "sentence": "문장1",
@@ -21,8 +21,8 @@ Content-Type: application/json
     }
   ],
   "selected": {
-    "sentence": "문장2",
-    "index": 2
+    "sentence": "문장1",
+    "index": 1
   }
 }
 
@@ -30,3 +30,12 @@ Content-Type: application/json
 @pageNumber = 1
 GET localhost:8080/api/stories/{{storyId}}/pages/{{pageNumber}}
 Accept: application/json
+
+### 동화 제목 저장(동화 최종 저장)
+PUT localhost:8080/api/stories/{{storyId}}
+Content-Type: application/json
+
+{
+  "isPublic": "false",
+  "storyTitle": "동화제목"
+}
