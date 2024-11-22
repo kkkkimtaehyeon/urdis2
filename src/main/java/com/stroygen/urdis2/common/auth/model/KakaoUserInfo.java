@@ -8,7 +8,8 @@ public class KakaoUserInfo {
     private String nickname;
     private String email;
 
-    public KakaoUserInfo(@JsonProperty("kakao_account.name") String nickname,
+
+    public KakaoUserInfo(@JsonProperty("properties.nickname") String nickname,
                          @JsonProperty("kakao_account.email") String email) {
         this.nickname = nickname;
         this.email = email;

@@ -1,4 +1,4 @@
-package com.stroygen.urdis2.service;
+package com.stroygen.urdis2.service.impl;
 
 import com.stroygen.urdis2.dto.baseStory.BaseStorySaveRequestDto;
 import com.stroygen.urdis2.entity.BaseStory;

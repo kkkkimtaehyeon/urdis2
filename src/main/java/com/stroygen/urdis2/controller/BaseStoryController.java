@@ -3,7 +3,7 @@ package com.stroygen.urdis2.controller;
 import com.stroygen.urdis2.dto.baseStory.BaseStorySaveResponseDto;
 import com.stroygen.urdis2.dto.baseStory.BaseStorySaveRequestDto;
 import com.stroygen.urdis2.entity.BaseStory;
-import com.stroygen.urdis2.service.BaseStoryService;
+import com.stroygen.urdis2.service.impl.BaseStoryService;
 import com.stroygen.urdis2.dto.story.StoryInitializerDto;
 import com.stroygen.urdis2.service.StoryService;
 import jakarta.validation.Valid;

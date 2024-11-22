@@ -1,23 +1,18 @@
 package com.stroygen.urdis2.common.config;
 
+import com.stroygen.urdis2.common.auth.service.CustomOAuth2UserService;
 import com.stroygen.urdis2.common.handler.OAuth2AuthenticationSuccessHandler;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
+@RequiredArgsConstructor
 @Configuration
 public class SecurityConfig {
-
-//    @Value("${spring.security.oauth2.client.registration.kakao.client-id}")
-//    private String clientId;
-//
-//    @Value("${spring.security.oauth2.client.registration.kakao.client-secret}")
-//    private String clientSecret;
-//
-//    @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
-//    private String redirectUri;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -25,10 +20,11 @@ public class SecurityConfig {
         http.authorizeHttpRequests(requests -> requests
                 .anyRequest().permitAll()
         );
-//        http.oauth2Login(oauthLogin -> oauthLogin
-//                .loginPage("/login")
-//                .successHandler(new OAuth2AuthenticationSuccessHandler())
-//        );
+        http.oauth2Login(oauthLogin -> oauthLogin
+                .loginPage("/login")
+                .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
+                .successHandler(new OAuth2AuthenticationSuccessHandler())
+        );
 
         return http.build();
     }
