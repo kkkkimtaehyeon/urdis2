@@ -1,11 +1,15 @@
 package com.stroygen.urdis2.service.impl;
 
 import com.stroygen.urdis2.dto.story.StorySaveDto;
+import com.stroygen.urdis2.entity.Member;
+import com.stroygen.urdis2.exception.MemberNotFoundException;
 import com.stroygen.urdis2.exception.StoryNotFoundException;
 import com.stroygen.urdis2.dto.story.StoryInitializerDto;
 import com.stroygen.urdis2.dto.story.StoryUpdateDto;
 import com.stroygen.urdis2.entity.Story;
+import com.stroygen.urdis2.repository.MemberRepository;
 import com.stroygen.urdis2.repository.StoryRepository;
+import com.stroygen.urdis2.service.MemberService;
 import com.stroygen.urdis2.service.StoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +23,7 @@ import java.util.Optional;
 public class StoryServiceImpl implements StoryService {
 
     private final StoryRepository storyRepository;
+    private final MemberRepository memberRepository;
 
     @Override
     public Long initialize(StoryInitializerDto storyInitializerDto) {
@@ -33,8 +38,11 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
-    public List<Story> getStories(Long userId) {
-        return List.of();
+    public List<Story> getStories(Long memberId) {
+        if (memberRepository.existsById(memberId)) {
+            throw new MemberNotFoundException(memberId);
+        }
+        return storyRepository.findAllByMemberId(memberId);
     }
 
     @Override

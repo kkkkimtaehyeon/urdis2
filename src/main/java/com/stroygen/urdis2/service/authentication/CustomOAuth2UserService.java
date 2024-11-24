@@ -30,6 +30,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         Map<String, Object> attributes = new HashMap<>();
         attributes.put("nickname", profile.get("nickname"));
         attributes.put("email", kakaoAccount.get("email"));
+        attributes.put("id", oAuth2User.getAttribute("id"));
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),

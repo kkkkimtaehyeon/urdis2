@@ -19,4 +19,14 @@ public class MemberController {
         Member member = memberService.registerMember(registerRequestDto);
         return ResponseEntity.status(HttpStatus.OK).body(member);
     }
+
+    @DeleteMapping("/{memberId}")
+    public ResponseEntity<String> remove(@PathVariable("memberId") Long memberId) {
+        if (memberId == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("bad request");
+        }
+
+        memberService.removeMember(memberId);
+        return ResponseEntity.status(HttpStatus.OK).body("removed");
+    }
 }
