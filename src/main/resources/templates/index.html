@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>홈</title>
 </head>
 <body>
-<h1>환영합니다.</h1>
-아이디: <span th:text="${id}"></span> <br/>
-이름: <span th:text="${name}"></span> <br/>
-<a href="/login">로그인</a>
+<div sec:authorize="isAuthenticated()">
+    <h1>환영합니다.</h1>
+    아이디: <span th:text="${email}"></span> <br/>
+    이름: <span th:text="${nickname}"></span> <br/>
+    <a href="/logout">로그아웃</a>
+</div>
+<div sec:authorize="!isAuthenticated()">
+    <a href="/login">로그인</a>
+</div>
+
 </body>
 </html>

@@ -12,8 +12,8 @@ public class IndexController {
     @GetMapping("/")
     public String index(@AuthenticationPrincipal OAuth2User oAuth2User, Model model) {
         if (oAuth2User != null) {
-            model.addAttribute("name", oAuth2User.getAttribute("name"));
-            model.addAttribute("name", oAuth2User.getAttribute("email"));
+            model.addAttribute("nickname", oAuth2User.getAttribute("nickname"));
+            model.addAttribute("email", oAuth2User.getAttribute("email"));
         }
 
         return "index";

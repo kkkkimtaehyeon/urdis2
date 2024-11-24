@@ -1,4 +1,4 @@
-package com.stroygen.urdis2.common.auth.service;
+package com.stroygen.urdis2.service.authentication;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -34,7 +34,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),
                 attributes,
-                "id"
+                "email"
         );
     }
 }
