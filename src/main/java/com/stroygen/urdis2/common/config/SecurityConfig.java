@@ -21,7 +21,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests(requests -> requests
-                .anyRequest().permitAll()
+                .requestMatchers("/").permitAll()
+                .requestMatchers("/login", "/oauth2/authorization/kakao").permitAll()
+                .anyRequest().authenticated()
         );
         http.oauth2Login(oauthLogin -> oauthLogin
                 .loginPage("/login")

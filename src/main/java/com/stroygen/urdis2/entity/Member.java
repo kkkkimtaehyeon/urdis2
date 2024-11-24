@@ -1,10 +1,15 @@
 package com.stroygen.urdis2.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
 @Getter
 @Entity
 public class Member {
@@ -17,7 +22,18 @@ public class Member {
     @Column(name = "member_name", nullable = false)
     private String name;
     @Column(name = "member_birth")
-    private String birth;
-    @Column(name = "created_at")
+    private LocalDate birth;
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+
+    @Builder
+    public Member(Long id, String email, String name, LocalDate birth, LocalDateTime createdAt) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        this.birth = birth;
+        this.createdAt = createdAt;
+    }
 }

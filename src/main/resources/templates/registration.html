@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 등록</title>
+</head>
+<body>
+<h1>최초 로그인으로 회원 등록이 필요합니다.</h1>
+<form method="post" action="/members">
+    아이디: <input type="email" th:value="${email}" name="email" readonly>
+    닉네임: <input type="text" maxlength="20" name="nickname"> <br/>
+    생년월일: <input type="date" name="birth"> <br/>
+    <button type="submit">등록</button>
+</form>
+
+</body>
+</html>

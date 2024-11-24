@@ -1,6 +1,5 @@
 package com.stroygen.urdis2.controller;
 
-
 import com.stroygen.urdis2.service.MemberService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -14,16 +13,21 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 @Controller
-public class IndexController {
+public class AuthController {
     private final MemberService memberService;
-
-    @GetMapping("/")
-    public String index(@AuthenticationPrincipal OAuth2User oAuth2User, Model model) throws IOException {
-        if (oAuth2User != null) {
-            model.addAttribute("nickname", oAuth2User.getAttribute("nickname"));
-            model.addAttribute("email", oAuth2User.getAttribute("email"));
+    @GetMapping("/login/success")
+    public String loginSuccess(HttpServletResponse res, Model model,
+                               @AuthenticationPrincipal OAuth2User oAuth2User) throws IOException {
+        if (oAuth2User == null) {
+            throw new RuntimeException("401, 잘못된 접근입니다.");
         }
 
-        return "index";
+        String email = oAuth2User.getAttribute("email");
+        if (memberService.isExists(email)) {
+            res.sendRedirect("/");
+            return null;
+        }
+        model.addAttribute("email", email);
+        return "registration";
     }
 }

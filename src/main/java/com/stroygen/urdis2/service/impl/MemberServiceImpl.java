@@ -1,5 +1,6 @@
 package com.stroygen.urdis2.service.impl;
 
+import com.stroygen.urdis2.dto.member.MemberRegisterRequestDto;
 import com.stroygen.urdis2.entity.Member;
 import com.stroygen.urdis2.exception.MemberAlreadyExistsException;
 import com.stroygen.urdis2.exception.MemberNotFoundException;
@@ -15,11 +16,16 @@ import java.util.Optional;
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     @Override
-    public Member createMember(Member member) {
-        String email = member.getEmail();
+    public Member registerMember(MemberRegisterRequestDto request) {
+        String email = request.email();
         if (memberRepository.existsByEmail(email)) {
             throw new MemberAlreadyExistsException(email);
         }
+        Member member = Member.builder()
+                .email(request.email())
+                .name(request.nickname())
+                .birth(request.birth())
+                .build();
         return memberRepository.save(member);
     }
 
@@ -34,5 +40,10 @@ public class MemberServiceImpl implements MemberService {
     public Member getMember(Long memberId) {
         Optional<Member> member = memberRepository.findById(memberId);
         return member.orElseThrow(() -> new MemberNotFoundException(memberId));
+    }
+
+    @Override
+    public boolean isExists(String email) {
+        return memberRepository.existsByEmail(email);
     }
 }

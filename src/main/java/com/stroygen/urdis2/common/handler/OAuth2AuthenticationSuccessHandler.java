@@ -19,6 +19,6 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         authService.addOAuth2UserOnSession(request, response, authentication);
-        response.sendRedirect("/");
+        response.sendRedirect("/login/success");
     }
 }
