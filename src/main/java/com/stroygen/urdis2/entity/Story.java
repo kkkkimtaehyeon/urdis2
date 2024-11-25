@@ -22,12 +22,13 @@ public class Story {
     private Integer likeCount = 0;
     private Integer viewCount = 0;
     private Boolean isPublic = false;
+    private String baseStory;
     @ManyToOne
-    @JoinColumn(name = "base_story_id")
-    private BaseStory baseStory;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Builder
-    public Story(Long storyId, String storyTitle, LocalDateTime createdAt, Integer likeCount, Integer viewCount, Boolean isPublic, BaseStory baseStory) {
+    public Story(Long storyId, String storyTitle, LocalDateTime createdAt, Integer likeCount, Integer viewCount, Boolean isPublic, String baseStory, Member member) {
         this.storyId = storyId;
         this.storyTitle = storyTitle;
         this.createdAt = createdAt;
@@ -35,6 +36,7 @@ public class Story {
         this.viewCount = viewCount;
         this.isPublic = isPublic;
         this.baseStory = baseStory;
+        this.member = member;
     }
 }
 

@@ -1,15 +1,11 @@
 package com.stroygen.urdis2.service.impl;
 
-import com.stroygen.urdis2.dto.story.StorySaveDto;
-import com.stroygen.urdis2.entity.Member;
+import com.stroygen.urdis2.dto.story.*;
 import com.stroygen.urdis2.exception.MemberNotFoundException;
 import com.stroygen.urdis2.exception.StoryNotFoundException;
-import com.stroygen.urdis2.dto.story.StoryInitializerDto;
-import com.stroygen.urdis2.dto.story.StoryUpdateDto;
 import com.stroygen.urdis2.entity.Story;
 import com.stroygen.urdis2.repository.MemberRepository;
 import com.stroygen.urdis2.repository.StoryRepository;
-import com.stroygen.urdis2.service.MemberService;
 import com.stroygen.urdis2.service.StoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,11 +21,11 @@ public class StoryServiceImpl implements StoryService {
     private final StoryRepository storyRepository;
     private final MemberRepository memberRepository;
 
-    @Override
-    public Long initialize(StoryInitializerDto storyInitializerDto) {
-        Story story = storyRepository.save(storyInitializerDto.toEntity());
-        return story.getStoryId();
-    }
+//    @Override
+//    public Long initialize(StoryInitializerDto storyInitializerDto) {
+//        Story story = storyRepository.save(storyInitializerDto.toEntity());
+//        return story.getStoryId();
+//    }
 
     @Override
     public Story getStory(Long storyId) {
@@ -81,5 +77,17 @@ public class StoryServiceImpl implements StoryService {
                 .build();
 
         return storyRepository.save(finalStory);
+    }
+
+    /** 동화생성 시작 시 기초 이야기만 저장해서 동화 id를 반환해줌*/
+    @Override
+    public StoryBaseResponse saveBaseStory(StoryBaseRequest request) {
+        String baseStory = request.baseStory();;
+        Story story = Story.builder()
+                .baseStory(baseStory)
+                .build();
+        Story savedStory = storyRepository.save(story);
+
+        return new StoryBaseResponse(baseStory, savedStory.getStoryId());
     }
 }

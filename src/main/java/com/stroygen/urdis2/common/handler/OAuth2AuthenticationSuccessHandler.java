@@ -15,7 +15,6 @@ import java.io.IOException;
 @Slf4j
 public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     private final AuthService authService;
-
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         authService.addOAuth2UserOnSession(request, response, authentication);

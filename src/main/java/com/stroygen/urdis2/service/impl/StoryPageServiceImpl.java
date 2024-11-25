@@ -7,7 +7,6 @@ import com.stroygen.urdis2.dto.page.Sentence;
 import com.stroygen.urdis2.entity.Story;
 import com.stroygen.urdis2.entity.page.SentenceOption;
 import com.stroygen.urdis2.entity.page.StoryPage;
-import com.stroygen.urdis2.exception.StoryNotFoundException;
 import com.stroygen.urdis2.exception.StoryPageNotFoundException;
 import com.stroygen.urdis2.repository.SentenceOptionRepository;
 import com.stroygen.urdis2.repository.StoryPageRepository;
@@ -33,7 +32,7 @@ public class StoryPageServiceImpl implements StoryPageService {
     public PageSaveResponse save(Long storyId, PageSaveRequest pageSaveRequest) {
         Story story = storyService.getStory(storyId);
 
-        StoryPage storyPage = storyPageRepository.save(pageSaveRequest.toStoryPageEntity(story));
+        StoryPage storyPage = storyPageRepository.save(pageSaveRequest.toEntity(story));
 
         for (Sentence sentence: pageSaveRequest.getOptions()) {
             SentenceOption sentenceOption = new SentenceOption(sentence.getSentence(), sentence.getIndex(), storyPage);

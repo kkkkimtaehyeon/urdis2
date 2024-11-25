@@ -16,7 +16,7 @@ public class PageSaveRequest {
     private List<Sentence> options;
     private Sentence selected;
 
-    public StoryPage toStoryPageEntity(Story story) {
+    public StoryPage toEntity(Story story) {
         return new StoryPage(this.pageNumber, selected.getSentence(), story);
     }
 
