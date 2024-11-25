@@ -6,7 +6,6 @@ import com.stroygen.urdis2.entity.Story;
 import java.util.List;
 
 public interface StoryService {
-//    Long initialize(StoryInitializerDto storyInitializerDto);
 
     Story getStory(Long storyId);
     List<Story> getStories(Long memberId);

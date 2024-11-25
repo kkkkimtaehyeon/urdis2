@@ -8,6 +8,7 @@ import com.stroygen.urdis2.service.StoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +45,13 @@ public class StoryController {
         Story story = storyService.getStory(storyId);
         return ResponseEntity.status(HttpStatus.OK).body(story);
     }
+
+//    @GetMapping
+//    public ResponseEntity<?> getStories(@RequestParam int page,
+//                                        @RequestParam(name = "size", required = false, defaultValue = "10") int size,
+//                                        @RequestParam String direction,
+//                                        @RequestParam String property) {
+//    }
 
 
 

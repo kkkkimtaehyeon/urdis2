@@ -1,4 +1,4 @@
-package com.stroygen.urdis2.common.advice;
+package com.stroygen.urdis2.common.handler;
 
 import com.stroygen.urdis2.exception.StoryNotFoundException;
 import io.micrometer.common.lang.Nullable;

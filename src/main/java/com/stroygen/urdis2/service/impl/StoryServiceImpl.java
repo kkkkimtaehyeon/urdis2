@@ -21,12 +21,6 @@ public class StoryServiceImpl implements StoryService {
     private final StoryRepository storyRepository;
     private final MemberRepository memberRepository;
 
-//    @Override
-//    public Long initialize(StoryInitializerDto storyInitializerDto) {
-//        Story story = storyRepository.save(storyInitializerDto.toEntity());
-//        return story.getStoryId();
-//    }
-
     @Override
     public Story getStory(Long storyId) {
         Optional<Story> optionalStory = storyRepository.findById(storyId);
