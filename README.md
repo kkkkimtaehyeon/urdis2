@@ -3,5 +3,6 @@
 
 # 기능 소개
 1. 나의 이야기를 기반으로 동화 생성을 시작할 수 있음.
+2. 다른 유저가 생성한 동화를 볼 수 있음.
 ## ERD
 https://www.erdcloud.com/d/BzmgrFZsGNR7HiJes
