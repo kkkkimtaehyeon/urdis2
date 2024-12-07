@@ -40,7 +40,7 @@ public class StoryServiceImpl implements StoryService {
     @Override
     public List<Story> getStories(Long memberId) {
         if (memberRepository.existsById(memberId)) {
-            throw new MemberNotFoundException(memberId);
+            throw new MemberNotFoundException();
         }
         return storyRepository.findAllByMemberId(memberId);
     }
