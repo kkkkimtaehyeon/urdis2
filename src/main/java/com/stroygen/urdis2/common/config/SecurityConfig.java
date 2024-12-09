@@ -23,7 +23,12 @@ public class SecurityConfig {
                 .requestMatchers("/login/**", "/oauth2/authorization/kakao").permitAll()
                 .anyRequest().authenticated()
         );
+        http.formLogin(formLogin -> formLogin
+                .loginPage("/login")
+                .permitAll()
+        );
         http.oauth2Login(oauthLogin -> oauthLogin
+                .loginPage("/login")
                 .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
                 .successHandler(oAuth2AuthenticationSuccessHandler)
         );

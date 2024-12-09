@@ -1,12 +1,9 @@
 package com.stroygen.urdis2.common.handler;
 
-import com.stroygen.urdis2.common.provider.JwtProvider;
 import com.stroygen.urdis2.dto.MemberDto;
 import com.stroygen.urdis2.exception.MemberNotFoundException;
 import com.stroygen.urdis2.service.MemberService;
-import com.stroygen.urdis2.service.authentication.AuthService;
 import com.stroygen.urdis2.service.authentication.TokenService;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +14,13 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccessHandler {
     private final MemberService memberService;
-    private final JwtProvider jwtProvider;
+
     private final TokenService tokenService;
 
 
@@ -37,16 +33,10 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
         try {
             MemberDto memberDto = memberService.getMember(email);
 
-            String accessToken = jwtProvider.generateAccessToken(memberDto);
-            String refreshToken = jwtProvider.generateRefreshToken(memberDto);
-            // 쿠키(or 로컬 스토리지)에 액세스 토큰 추가
-            tokenService.setAccessTokenCookie(response, accessToken);
-            // 레디스에서 액세스토큰: 리프레시 토큰 저장
-            tokenService.saveRefreshTokenOnRedis(accessToken, refreshToken);
+            tokenService.issueJwt(memberDto, response);
 
         } catch (MemberNotFoundException e) {
             response.sendRedirect("/members/register?email=" + email);
-            return;
         }
 
     }

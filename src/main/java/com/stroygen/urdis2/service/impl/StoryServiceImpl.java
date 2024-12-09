@@ -37,13 +37,13 @@ public class StoryServiceImpl implements StoryService {
         return optionalStory.orElseThrow(() -> new StoryNotFoundException(storyId));
     }
 
-    @Override
-    public List<Story> getStories(Long memberId) {
-        if (memberRepository.existsById(memberId)) {
-            throw new MemberNotFoundException();
-        }
-        return storyRepository.findAllByMemberId(memberId);
-    }
+//    @Override
+//    public List<Story> getStories(Long memberId) {
+//        if (memberRepository.existsById(memberId)) {
+//            throw new MemberNotFoundException();
+//        }
+//        return storyRepository.findAllByMemberId(memberId);
+//    }
 
     @Override
     public void removeStory(Long storyId) {

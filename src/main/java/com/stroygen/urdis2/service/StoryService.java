@@ -11,7 +11,7 @@ public interface StoryService {
     Long initialize(StoryInitializerDto storyInitializerDto);
 
     Story getStory(Long storyId);
-    List<Story> getStories(Long memberId);
+//    List<Story> getStories(Long memberId);
     void removeStory(Long storyId);
     Story modifyStory(StoryUpdateDto storyUpdateDto);
     boolean isStoryExists(Long storyId);
