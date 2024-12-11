@@ -9,8 +9,7 @@ public class MemberDto {
     private String email;
     private String role;
 
-    public MemberDto(long id, String email, String role){
-        this.id = id;
+    public MemberDto( String email, String role){
         this.email = email;
         this.role = role;
     }

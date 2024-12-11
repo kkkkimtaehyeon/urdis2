@@ -28,16 +28,14 @@ public class OAuth2AuthenticationSuccessHandler implements AuthenticationSuccess
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         OAuth2User user = (OAuth2User) authentication.getPrincipal();
         String email = user.getAttribute("email");
-        // 등록된 유저인지 확인
-//        MemberDto memberDto = new MemberDto(1L, email, "ROLE_ADMIN");
         try {
             MemberDto memberDto = memberService.getMember(email);
-
             tokenService.issueJwt(memberDto, response);
 
         } catch (MemberNotFoundException e) {
             response.sendRedirect("/members/register?email=" + email);
         }
+        response.sendRedirect("/");
 
     }
 }

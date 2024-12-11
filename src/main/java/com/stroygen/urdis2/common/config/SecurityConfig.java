@@ -1,5 +1,6 @@
 package com.stroygen.urdis2.common.config;
 
+import com.stroygen.urdis2.common.handler.CustomLogoutHandler;
 import com.stroygen.urdis2.common.handler.OAuth2AuthenticationSuccessHandler;
 import com.stroygen.urdis2.service.authentication.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+    private final CustomLogoutHandler customLogoutHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -31,6 +33,10 @@ public class SecurityConfig {
                 .loginPage("/login")
                 .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
                 .successHandler(oAuth2AuthenticationSuccessHandler)
+        );
+        http.logout(logout -> logout
+                .addLogoutHandler(customLogoutHandler)
+                .logoutSuccessUrl("/")
         );
 
         return http.build();

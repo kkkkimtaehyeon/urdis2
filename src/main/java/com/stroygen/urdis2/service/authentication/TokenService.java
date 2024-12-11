@@ -11,18 +11,19 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class TokenService {
-    public static final String SESSION = "RefreshTokens:";
-    private final RedisTemplate<String, Object> session;
+    public static final String SESSION_KEY = "RefreshTokens:";
+    private final RedisTemplate<String, Object> redisTemplate;
     private final JwtProvider jwtProvider;
 
-    public void issueJwt(MemberDto memberDto, HttpServletResponse response) {
+    public String issueJwt(MemberDto memberDto, HttpServletResponse response) {
         String accessToken = jwtProvider.generateAccessToken(memberDto);
         String refreshToken = jwtProvider.generateRefreshToken(memberDto);
-        // 쿠키(or 로컬 스토리지)에 액세스 토큰 추가
         setAccessTokenCookie(response, accessToken);
-        // 레디스에서 액세스토큰: 리프레시 토큰 저장
         saveRefreshTokenOnRedis(accessToken, refreshToken);
 
+        response.setHeader("Authorization", "Bearer " + accessToken);
+
+        return accessToken;
     }
 
     public void setAccessTokenCookie(HttpServletResponse res, String token) {
@@ -33,6 +34,12 @@ public class TokenService {
     }
 
     public void saveRefreshTokenOnRedis(String accessToken, String refreshToken) {
-        session.opsForHash().put(SESSION, accessToken, refreshToken);
+        redisTemplate.opsForHash().put(SESSION_KEY, accessToken, refreshToken);
+    }
+
+    public void removeRefreshToken(String accessToken) {
+        if (redisTemplate.opsForHash().hasKey(SESSION_KEY, accessToken)) {
+            redisTemplate.opsForHash().delete(SESSION_KEY, accessToken);
+        }
     }
 }

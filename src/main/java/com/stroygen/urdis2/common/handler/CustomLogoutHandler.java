@@ -1,26 +1,34 @@
 package com.stroygen.urdis2.common.handler;
 
-import com.stroygen.urdis2.service.authentication.AuthService;
+import com.stroygen.urdis2.service.authentication.TokenService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-
-@Slf4j
 @RequiredArgsConstructor
+@Component
 public class CustomLogoutHandler implements LogoutHandler {
-    private final AuthService authService;
+    private final TokenService tokenService;
+
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        authService.removeOAuth2UserOnSession(request, response);
-        try {
-            response.sendRedirect("/");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        Cookie[] cookies = request.getCookies();
+
+        for (Cookie cookie: cookies) {
+            if (cookie.getName().equals("accessToken")) {
+                String accessToken = cookie.getValue();
+                tokenService.removeRefreshToken(accessToken);
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+                break;
+            }
         }
     }
+
+
 }
