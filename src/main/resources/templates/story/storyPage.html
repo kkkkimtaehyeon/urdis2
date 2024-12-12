@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>페이지 이동</title>
+</head>
+<body>
+<input type="hidden" id="storyId" th:value="${storyId}">
+<h1 th:text="${currentPage} + '번째 페이지'"></h1>
+<input type="text" id="content">
+<button type="button" id="nextBtn">다음 페이지</button>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const nextBtn = document.getElementById("nextBtn");
+    const content = document.getElementById("content");
+    let currentPage = [[${currentPage}]]; // 서버에서 전달된 현재 페이지 값
+    const storyId = document.getElementById("storyId").value; // .value로 storyId 값 가져오기
+
+    nextBtn.addEventListener('click', () => moveToNextPage(currentPage));
+
+    async function moveToNextPage(currentPage) {
+        const data = {
+            content: content.value,
+            pageNumber: currentPage
+        };
+
+        try {
+            const response = await fetch(`/api/stories/${storyId}/pages`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                // 페이지 이동 시 currentPage를 숫자로 변환 후 증가
+                currentPage = parseInt(currentPage, 10);
+                window.location.replace(`/story/new?page=${currentPage + 1}`);
+            } else {
+                const errorData = await response.json();
+                alert(`등록 실패: ${errorData.message || '알 수 없는 오류'}`);
+            }
+        } catch (error) {
+            alert(`오류 발생: ${error.message}`);
+        }
+    }
+    /*]]>*/
+</script>
+</body>
+</html>

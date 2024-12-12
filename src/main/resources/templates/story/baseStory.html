@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>동화 만들기</title>
+</head>
+<body>
+<h1>첫번째 단계</h1>
+<textarea id="baseStory" placeholder="동화로 만들고 싶은 나만의 이야기를 적어주세요!"></textarea>
+<button type="button" id="submitBtn">다음 단계</button>
+
+
+<script>
+    document.getElementById("submitBtn").addEventListener('click', async () => {
+
+        const baseStory = document.getElementById("baseStory").value;
+        const data = {
+            baseStory: baseStory
+        };
+        const accessToken = getCookie("accessToken");
+        if (accessToken === null) {
+            alert("401 Unauthorized!")
+            window.location.replace("/login")
+            return;
+        }
+
+
+        try {
+            const response = await fetch('http://localhost:8080/api/base-stories', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + accessToken
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                if (response.ok) {
+                    const responseData = await response.json(); // JSON 데이터 파싱
+                    const storyId = responseData.storyId; // storyId 추출
+                    window.location.replace(`http://localhost:8080/story/new?page=1&storyId=${storyId}`);
+                } else {
+                    const errorData = await response.json();
+                    alert(`등록 실패: ${errorData.message || '알 수 없는 오류'}`);
+                }
+            } else {
+                const errorData = await response.json();
+                alert(`등록 실패: ${errorData.message || '알 수 없는 오류'}`);
+            }
+        } catch (error) {
+            alert(`오류 발생: ${error.message}`);
+        }
+
+
+        //쿠키 값 가져오는 함수
+        function getCookie(cookieName) {
+            cookieName = cookieName + '=';
+            let cookieData = document.cookie;
+            let start = cookieData.indexOf(cookieName);
+            let cookieValue = '';
+            if (start != -1) {
+                start += cookieName.length;
+                let end = cookieData.indexOf(';', start);
+                if (end == -1) end = cookieData.length;
+                cookieValue = cookieData.substring(start, end);
+            }
+
+            return decodeURIComponent(cookieValue);
+        }
+
+    });
+
+</script>
+</body>
+
+</html>

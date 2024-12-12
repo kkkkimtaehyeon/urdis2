@@ -23,7 +23,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(requests -> requests
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/login/**", "/oauth2/authorization/kakao").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
         );
         http.formLogin(formLogin -> formLogin
                 .loginPage("/login")

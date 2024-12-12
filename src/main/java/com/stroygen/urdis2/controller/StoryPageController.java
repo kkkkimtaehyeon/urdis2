@@ -3,7 +3,6 @@ package com.stroygen.urdis2.controller;
 import com.stroygen.urdis2.dto.page.PageResponse;
 import com.stroygen.urdis2.dto.page.PageSaveRequest;
 import com.stroygen.urdis2.dto.page.PageSaveResponse;
-import com.stroygen.urdis2.entity.page.StoryPage;
 import com.stroygen.urdis2.service.StoryPageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

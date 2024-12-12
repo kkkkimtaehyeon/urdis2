@@ -1,10 +1,10 @@
-package com.stroygen.urdis2.entity.page;
+package com.stroygen.urdis2.entity;
 
 import com.stroygen.urdis2.dto.page.PageResponse;
-import com.stroygen.urdis2.entity.Story;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @Getter
@@ -14,11 +14,13 @@ public class StoryPage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "story_page_id")
     private Long storyPageId;
-    @Column(name = "page_number")
+
     private Integer pageNumber;
 
     private String content;
-    @ManyToOne
+
+    @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "story_id", referencedColumnName = "story_id")
     private Story story;
 

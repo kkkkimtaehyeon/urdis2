@@ -1,5 +1,6 @@
 package com.stroygen.urdis2.controller;
 
+import com.stroygen.urdis2.dto.baseStory.BaseStorySaveRequestDto;
 import com.stroygen.urdis2.dto.story.StorySaveDto;
 import com.stroygen.urdis2.entity.Story;
 import com.stroygen.urdis2.service.StoryService;
@@ -21,22 +22,10 @@ import java.util.List;
 public class StoryController {
     private final StoryService storyService;
 
-    @PutMapping("/{storyId}")
-    public ResponseEntity<Story> saveStory(@PathVariable("storyId") Long storyId,
-                                    @RequestBody StorySaveDto storySaveDto) {
-        Story savedStory = storyService.finalizeStory(storyId, storySaveDto);
-        return ResponseEntity.status(HttpStatus.OK).body(savedStory);
+    @PostMapping("/base-stories")
+    public ResponseEntity<?> saveBaseStory(@RequestBody BaseStorySaveRequestDto saveRequest) {
+        long storyId = storyService.saveBaseStory(saveRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(storyId);
     }
-
-    @DeleteMapping("/{storyId}")
-    public ResponseEntity<Void> removeStory(@PathVariable("storyId") Long storyId) {
-        storyService.removeStory(storyId);
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
-
-//    @GetMapping("/me")
-//    public ResponseEntity<List<Story>> getMemberStories(@AuthenticationPrincipal OAuth2User oAuth2User) {
-//
-//    }
 
 }
